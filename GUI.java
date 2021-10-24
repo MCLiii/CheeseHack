@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 //package PACKAGE_NAME;
+//https://github.com/MCLiii/CheeseHack
 
 public class GUI {
     static SchoolClass schoolClass;
@@ -34,10 +35,8 @@ public class GUI {
             String teacherFirstName = input.nextLine();
             System.out.println("Enter teacher's last name: ");
             String teacherLastName = input.nextLine();
-            SchoolClass newClass = new SchoolClass(className, subject, teacherFirstName, teacherLastName);
-            newClass.addDate();
-            IO io=new IO(className, newClass);
-            io.writeToFile();
+            schoolClass = new SchoolClass(className, subject, teacherFirstName, teacherLastName);
+            addStudent();
             //startAttendance(className);
         } else {
             startAttendance(option);
@@ -69,10 +68,27 @@ public class GUI {
             if(!id.equals("x")){
                 if(indx==-1)
                     System.out.println("Does not exist");
-                else
+                else{
                     schoolClass.students.get(indx).attendance.set(
-                                schoolClass.students.get(indx).attendance.size(), true);
+                                schoolClass.students.get(indx).attendance.size()-1, true);
+                    System.out.println(schoolClass.students.get(indx).getFirstName()+" "+schoolClass.students.get(indx).getLastName());
+                }
             }
+        }
+    }
+
+    public static void addStudent(){
+        while(true){
+            System.out.println("New Student First Name: (Press x to quit)");
+            String firstName = input.nextLine();
+            if(firstName.equals("x"))
+                break;
+            System.out.println("New Student Last Name: ");
+            String lastName = input.nextLine();
+            System.out.println("New Student id: ");
+            String id = input.nextLine();
+            Students student = new Students(firstName, lastName, id);
+            schoolClass.addStudent(student);
         }
     }
 }
